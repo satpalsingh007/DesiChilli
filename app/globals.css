@@ -881,6 +881,8 @@ footer.site-footer {
 .footer-logo {
   display: block;
   height: 48px;
+  /* Pairs with height so the width is known before the file loads. */
+  aspect-ratio: 133 / 48;
   width: auto;
   border-radius: 8px;
 }

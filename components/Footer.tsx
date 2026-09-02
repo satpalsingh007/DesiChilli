@@ -16,10 +16,9 @@ export function Footer() {
                 <Image
                   src="/logo.png"
                   alt="Desi Chilli"
-                  width={2000}
-                  height={723}
+                  width={133}
+                  height={48}
                   className="footer-logo"
-                  style={{ width: "auto", height: "48px" }}
                 />
               </Link>
             </h4>
