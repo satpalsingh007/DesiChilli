@@ -16,6 +16,8 @@ export type PostFrontmatter = {
   heat: number;
   author: string;
   date: string;
+  /** Quoted `YYYY-MM-DD` for a substantive revision; feeds schema dateModified. */
+  updated?: string;
   readTime: string;
   slug: string;
   /** Local `/images/posts/{slug}-cover.jpg` or a Cloudinary https URL */

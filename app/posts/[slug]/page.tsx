@@ -5,6 +5,7 @@ import { CoverImage } from "@/components/CoverImage";
 import { HeatIndex } from "@/components/HeatIndex";
 import { MdxContent } from "@/components/MdxContent";
 import { RecapCard } from "@/components/RecapCard";
+import { authorSlug } from "@/lib/authors";
 import { getCategory } from "@/lib/categories";
 import { resolveCoverSrc } from "@/lib/cover";
 import {
@@ -42,6 +43,7 @@ export function generateMetadata({ params }: PostPageProps): Metadata {
         siteName: SITE.name,
         locale: SITE.locale,
         publishedTime: post.date,
+        modifiedTime: post.updated ?? post.date,
         authors: [post.author],
         images: [{ url: image }],
       },
@@ -75,11 +77,15 @@ export default function PostPage({ params }: PostPageProps) {
     headline: post.title,
     description: post.excerpt,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated ?? post.date,
     inLanguage: "en-IN",
     mainEntityOfPage: absoluteUrl(`/posts/${post.slug}`),
     image: [cover ? absoluteUrl(cover) : absoluteUrl(SITE.ogImage)],
-    author: { "@type": "Person", name: post.author },
+    author: {
+      "@type": "Person",
+      name: post.author,
+      url: absoluteUrl(`/author/${authorSlug(post.author)}`),
+    },
     publisher: {
       "@type": "Organization",
       name: SITE.name,
@@ -152,9 +158,19 @@ export default function PostPage({ params }: PostPageProps) {
           </div>
           <div className="meta-row">
             <span className="avatar">{getAuthorInitials(post.author)}</span>
-            <span>{post.author}</span>
+            <Link href={`/author/${authorSlug(post.author)}`} rel="author">
+              {post.author}
+            </Link>
             <span className="dot" />
-            <span>{formatPostDate(post.date)}</span>
+            <time dateTime={post.date}>{formatPostDate(post.date)}</time>
+            {post.updated ? (
+              <>
+                <span className="dot" />
+                <time dateTime={post.updated}>
+                  Updated {formatPostDate(post.updated)}
+                </time>
+              </>
+            ) : null}
             <span className="dot" />
             <span>{post.readTime} read</span>
           </div>

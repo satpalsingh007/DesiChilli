@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { getAllAuthors } from "@/lib/authors";
 import { CATEGORIES } from "@/lib/categories";
 import { getAllPostSummaries, getPostsByCategory } from "@/lib/posts";
 import { absoluteUrl } from "@/lib/site";
@@ -43,9 +44,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const articles: MetadataRoute.Sitemap = posts.map((post) => ({
     url: absoluteUrl(`/posts/${post.slug}`),
-    lastModified: new Date(post.date),
+    lastModified: new Date(post.updated ?? post.date),
     changeFrequency: "monthly",
     priority: 0.8,
+  }));
+
+  const authors: MetadataRoute.Sitemap = getAllAuthors().map((author) => ({
+    url: absoluteUrl(`/author/${author.slug}`),
+    lastModified: new Date(author.posts[0]?.date ?? newest),
+    changeFrequency: "weekly",
+    priority: 0.4,
   }));
 
   const pages: MetadataRoute.Sitemap = STATIC_PATHS.map((path) => ({
@@ -55,5 +63,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.3,
   }));
 
-  return [...home, ...categories, ...articles, ...pages];
+  return [...home, ...categories, ...articles, ...authors, ...pages];
 }
