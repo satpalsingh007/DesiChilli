@@ -7,6 +7,7 @@ export const SITE = {
   email: "satpalsingh248007@gmail.com",
   locale: "en_IN",
   ogImage: "/logo.png",
+  adsensePublisherId: "ca-pub-2342422385370316",
 } as const;
 
 export function absoluteUrl(pathname = "/"): string {

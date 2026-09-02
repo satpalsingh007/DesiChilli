@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Public_Sans } from "next/font/google";
-// import Script from "next/script";
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { NewsletterBand } from "@/components/NewsletterBand";
@@ -112,16 +112,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
         />
-        {/*
-          AdSense — uncomment after replacing ca-pub-XXXXXXXXXXXXXXXX
-          with your publisher ID from AdSense → Account → Account information.
         <Script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsensePublisherId}`}
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
-        */}
         <a className="skip-link" href="#main">
           Skip to content
         </a>
