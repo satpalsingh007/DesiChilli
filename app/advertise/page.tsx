@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { PageShell } from "@/components/PageShell";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Advertise",
+  description:
+    "Reserved homepage, in-article, and category ad inventory on Desi Chilli, plus how to request a media kit.",
+  alternates: { canonical: "/advertise" },
 };
 
 export default function AdvertisePage() {
@@ -15,7 +19,8 @@ export default function AdvertisePage() {
       </p>
       <p>
         For a media kit and available inventory, write to{" "}
-        <a href="mailto:ads@desichilly.com">ads@desichilly.com</a>.
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a> with the subject line
+        &ldquo;Advertising&rdquo;.
       </p>
     </PageShell>
   );

@@ -6,6 +6,7 @@ import { HeatIndex } from "@/components/HeatIndex";
 import { MdxContent } from "@/components/MdxContent";
 import { RecapCard } from "@/components/RecapCard";
 import { getCategory } from "@/lib/categories";
+import { resolveCoverSrc } from "@/lib/cover";
 import {
   formatPostDate,
   getAuthorInitials,
@@ -13,6 +14,7 @@ import {
   getPostSlugs,
   getRelatedPostSummaries,
 } from "@/lib/posts";
+import { SITE, absoluteUrl } from "@/lib/site";
 
 type PostPageProps = {
   params: { slug: string };
@@ -25,9 +27,30 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: PostPageProps): Metadata {
   try {
     const post = getPostBySlug(params.slug);
+    const url = `/posts/${post.slug}`;
+    const image = resolveCoverSrc(post.coverImage) ?? SITE.ogImage;
+
     return {
       title: post.title,
       description: post.excerpt,
+      alternates: { canonical: url },
+      openGraph: {
+        type: "article",
+        url,
+        title: post.title,
+        description: post.excerpt,
+        siteName: SITE.name,
+        locale: SITE.locale,
+        publishedTime: post.date,
+        authors: [post.author],
+        images: [{ url: image }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: post.title,
+        description: post.excerpt,
+        images: [image],
+      },
     };
   } catch {
     return { title: "Recap not found" };
@@ -44,9 +67,61 @@ export default function PostPage({ params }: PostPageProps) {
 
   const category = getCategory(post.category);
   const related = getRelatedPostSummaries(post.slug);
+  const cover = resolveCoverSrc(post.coverImage);
+
+  const articleLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    dateModified: post.date,
+    inLanguage: "en-IN",
+    mainEntityOfPage: absoluteUrl(`/posts/${post.slug}`),
+    image: [cover ? absoluteUrl(cover) : absoluteUrl(SITE.ogImage)],
+    author: { "@type": "Person", name: post.author },
+    publisher: {
+      "@type": "Organization",
+      name: SITE.name,
+      logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
+    },
+    articleSection: category?.name ?? "Recaps",
+  };
+
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
+      ...(category
+        ? [
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: category.name,
+              item: absoluteUrl(`/category/${category.slug}`),
+            },
+          ]
+        : []),
+      {
+        "@type": "ListItem",
+        position: category ? 3 : 2,
+        name: post.title,
+        item: absoluteUrl(`/posts/${post.slug}`),
+      },
+    ],
+  };
 
   return (
     <main className="wrap" id="main">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
       <article>
         <header className="article-hero">
           <nav className="article-crumb" aria-label="Breadcrumb">

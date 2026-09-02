@@ -4,6 +4,9 @@ import { PageShell } from "@/components/PageShell";
 
 export const metadata: Metadata = {
   title: "Write for us",
+  description:
+    "Pitch a reported recap, voting explainer, or argued hot take to the Desi Chilli desk.",
+  alternates: { canonical: "/write" },
 };
 
 export default function WritePage() {

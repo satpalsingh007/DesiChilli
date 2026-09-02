@@ -6,6 +6,7 @@ import { getAllPostSummaries } from "@/lib/posts";
 export const metadata: Metadata = {
   title: "All recaps",
   description: "Every Desi Chilli recap, explainer, and hot take in one place.",
+  alternates: { canonical: "/posts" },
 };
 
 export default function PostsIndexPage() {

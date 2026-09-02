@@ -3,6 +3,9 @@ import { PageShell } from "@/components/PageShell";
 
 export const metadata: Metadata = {
   title: "Terms of use",
+  description:
+    "The rules for reading, quoting, and republishing Desi Chilli recaps and hot takes.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

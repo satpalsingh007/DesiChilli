@@ -18,9 +18,21 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: CategoryPageProps): Metadata {
   const category = getCategory(params.slug);
   if (!category) return { title: "Category" };
+
+  const description =
+    category.dek ?? `Recaps, explainers, and hot takes from ${category.name}.`;
+  const url = `/category/${category.slug}`;
+
   return {
     title: category.name,
-    description: category.dek ?? `Recaps, explainers, and hot takes from ${category.name}.`,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "website",
+      url,
+      title: `${category.name} — Desi Chilli`,
+      description,
+    },
   };
 }
 
