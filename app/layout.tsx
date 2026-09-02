@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Mono, Public_Sans } from "next/font/google";
-import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { NewsletterBand } from "@/components/NewsletterBand";
@@ -103,6 +102,18 @@ export default function RootLayout({
       lang="en-IN"
       className={`${fraunces.variable} ${publicSans.variable} ${ibmPlexMono.variable}`}
     >
+      <head>
+        {/*
+          Plain tag rather than next/script: the AdSense verification crawler
+          reads the served HTML without hydrating, and next/script emits only a
+          preload hint plus a client-side injection.
+        */}
+        <script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsensePublisherId}`}
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"
@@ -111,12 +122,6 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
-        />
-        <Script
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsensePublisherId}`}
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
         <a className="skip-link" href="#main">
           Skip to content
