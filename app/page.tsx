@@ -17,8 +17,8 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-grid">
           <HeroCarousel>
-            {heroes.map((post) => (
-              <HeroLead key={post.slug} post={post} />
+            {heroes.map((post, index) => (
+              <HeroLead key={post.slug} post={post} priority={index === 0} />
             ))}
           </HeroCarousel>
           <TrendingSidebar posts={trending} />

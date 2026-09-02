@@ -103,6 +103,11 @@ export default function RootLayout({
       className={`${fraunces.variable} ${publicSans.variable} ${ibmPlexMono.variable}`}
     >
       <head>
+        <link
+          rel="preconnect"
+          href="https://pagead2.googlesyndication.com"
+          crossOrigin="anonymous"
+        />
         {/*
           Plain tag rather than next/script: the AdSense verification crawler
           reads the served HTML without hydrating, and next/script emits only a

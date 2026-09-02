@@ -6,9 +6,11 @@ import type { PostSummary } from "@/lib/types";
 
 type HeroLeadProps = {
   post: PostSummary;
+  /** True for the slide that is visible on load, which is the LCP element. */
+  priority?: boolean;
 };
 
-export function HeroLead({ post }: HeroLeadProps) {
+export function HeroLead({ post, priority = false }: HeroLeadProps) {
   return (
     <div className="hero-lead">
       <Link href={`/posts/${post.slug}`} aria-hidden="true" tabIndex={-1}>
@@ -17,6 +19,7 @@ export function HeroLead({ post }: HeroLeadProps) {
           category={post.category}
           alt=""
           variant="hero"
+          priority={priority}
         />
       </Link>
       <h2 className="hero-headline">

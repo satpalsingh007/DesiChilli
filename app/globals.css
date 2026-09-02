@@ -138,6 +138,8 @@ header.masthead {
 .wordmark-logo {
   display: block;
   height: clamp(64px, 8vw, 80px);
+  /* Pairs with height so the width is known before the file loads. */
+  aspect-ratio: 221 / 80;
   width: auto;
   border-radius: 10px;
 }

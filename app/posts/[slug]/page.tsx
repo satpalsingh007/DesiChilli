@@ -144,6 +144,7 @@ export default function PostPage({ params }: PostPageProps) {
             category={post.category}
             alt={post.title}
             variant="article"
+            priority
           />
           {category ? (
             <Link href={`/category/${category.slug}`} className={`cat-tag ${category.tagClass}`}>

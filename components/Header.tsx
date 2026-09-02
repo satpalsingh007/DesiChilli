@@ -136,10 +136,9 @@ export function Header({ posts }: HeaderProps) {
                   <Image
                     src="/logo.png"
                     alt="Desi Chilli"
-                    width={2000}
-                    height={723}
+                    width={221}
+                    height={80}
                     className="wordmark-logo"
-                    style={{ width: "auto", height: "80px" }}
                     priority
                   />
                 </Link>

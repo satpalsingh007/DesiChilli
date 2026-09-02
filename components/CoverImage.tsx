@@ -8,6 +8,8 @@ type CoverImageProps = {
   alt: string;
   variant?: "card" | "hero" | "article";
   sizes?: string;
+  /** Set on the above-the-fold image so it is not lazy-loaded. */
+  priority?: boolean;
 };
 
 export function CoverImage({
@@ -16,6 +18,7 @@ export function CoverImage({
   alt,
   variant = "card",
   sizes,
+  priority = false,
 }: CoverImageProps) {
   const src = resolveCoverSrc(coverImage);
   const accent = CATEGORY_ACCENT[category];
@@ -33,6 +36,7 @@ export function CoverImage({
           alt={alt}
           fill
           sizes={sizes ?? sizeMap[variant]}
+          priority={priority}
           style={{ objectFit: "cover" }}
         />
       ) : (
