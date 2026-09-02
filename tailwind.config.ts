@@ -20,6 +20,9 @@ const config: Config = {
         turmeric: {
           DEFAULT: "#F2A93B",
           dark: "#c98620",
+          // For turmeric used as text or as a background behind white text,
+          // where `dark` falls under the 4.5:1 contrast requirement.
+          deep: "#92600f",
         },
         curry: "#3A5A40",
         paper: {

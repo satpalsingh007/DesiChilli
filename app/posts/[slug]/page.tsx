@@ -94,6 +94,18 @@ export default function PostPage({ params }: PostPageProps) {
     articleSection: category?.name ?? "Recaps",
   };
 
+  const faqLd = post.faq
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: post.faq.map((entry) => ({
+          "@type": "Question",
+          name: entry.q,
+          acceptedAnswer: { "@type": "Answer", text: entry.a },
+        })),
+      }
+    : null;
+
   const breadcrumbLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -128,6 +140,12 @@ export default function PostPage({ params }: PostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
+      {faqLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
+      ) : null}
       <article>
         <header className="article-hero">
           <nav className="article-crumb" aria-label="Breadcrumb">
@@ -180,6 +198,23 @@ export default function PostPage({ params }: PostPageProps) {
           <MdxContent source={post.content} />
         </div>
       </article>
+      {post.faq ? (
+        <section className="section faq-section" aria-labelledby="faq-heading">
+          <div className="section-head">
+            <h2 className="section-title" id="faq-heading">
+              Quick answers
+            </h2>
+          </div>
+          <dl className="faq-list">
+            {post.faq.map((entry) => (
+              <div className="faq-item" key={entry.q}>
+                <dt className="faq-q">{entry.q}</dt>
+                <dd className="faq-a">{entry.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ) : null}
       {related.length > 0 ? (
         <section className="section related-section">
           <div className="section-head">

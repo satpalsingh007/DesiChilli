@@ -1,10 +1,29 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import type { CategorySlug, Post, PostFrontmatter, PostSummary } from "./types";
+import type {
+  CategorySlug,
+  FaqEntry,
+  Post,
+  PostFrontmatter,
+  PostSummary,
+} from "./types";
 import { SHOW_SLUGS } from "./categories";
 
 const POSTS_DIR = path.join(process.cwd(), "content/posts");
+
+function isFaqEntry(value: unknown): value is FaqEntry {
+  if (typeof value !== "object" || value === null) return false;
+  const entry = value as Partial<FaqEntry>;
+  return typeof entry.q === "string" && typeof entry.a === "string";
+}
+
+/** Drops malformed entries so a frontmatter typo cannot emit broken schema. */
+function readFaq(value: unknown): FaqEntry[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const entries = value.filter(isFaqEntry);
+  return entries.length > 0 ? entries : undefined;
+}
 
 function toSummary(data: PostFrontmatter): PostSummary {
   return {
@@ -19,6 +38,7 @@ function toSummary(data: PostFrontmatter): PostSummary {
     readTime: data.readTime,
     slug: data.slug,
     coverImage: data.coverImage,
+    faq: data.faq,
   };
 }
 
@@ -43,6 +63,7 @@ function readPostFile(slug: string): Post {
     readTime: frontmatter.readTime,
     slug: frontmatter.slug ?? slug,
     coverImage: frontmatter.coverImage,
+    faq: readFaq(frontmatter.faq),
     content,
   };
 }

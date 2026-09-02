@@ -7,9 +7,10 @@ import { getAllPostSummaries } from "@/lib/posts";
 import { SITE, absoluteUrl } from "@/lib/site";
 import "./globals.css";
 
+// Fraunces and Public Sans are variable fonts. Omitting `weight` ships one
+// file per style covering every weight, instead of one file per weight.
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "900"],
   style: ["normal", "italic"],
   variable: "--font-fraunces",
   display: "swap",
@@ -17,7 +18,6 @@ const fraunces = Fraunces({
 
 const publicSans = Public_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-public-sans",
   display: "swap",
 });

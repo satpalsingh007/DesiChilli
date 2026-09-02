@@ -13,9 +13,9 @@ export function HotTakes({ posts }: HotTakesProps) {
         <div className="take-row" key={post.slug}>
           <span className="take-index">{String(index + 1).padStart(2, "0")}</span>
           <div>
-            <h4 className="take-title">
+            <h3 className="take-title">
               <Link href={`/posts/${post.slug}`}>{post.title}</Link>
-            </h4>
+            </h3>
             <p className="take-sub">{post.excerpt}</p>
           </div>
           <span className="take-heat">
