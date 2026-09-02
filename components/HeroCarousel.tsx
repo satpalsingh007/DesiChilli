@@ -147,7 +147,7 @@ export function HeroCarousel({ children }: HeroCarouselProps) {
               aria-roledescription="slide"
               aria-label={`${slideIndex + 1} of ${count}`}
               aria-hidden={!active}
-              {...(!active ? { inert: "" } : {})}
+              inert={!active}
             >
               {slide}
             </div>
