@@ -20,6 +20,9 @@
 .DS_Store
 *.pem
 
+# local X/Twitter drafts (regenerated on request, not for the repo)
+/x/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
