@@ -1158,6 +1158,46 @@ footer.site-footer {
   font-size: 20px;
 }
 
+/* Wrapper scrolls instead of the table, so narrow screens never overflow the page. */
+.article-body .table-scroll {
+  margin: 0 0 1.4em;
+  overflow-x: auto;
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.article-body th,
+.article-body td {
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+
+.article-body th {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-bottom: 2px solid var(--ink);
+  white-space: nowrap;
+}
+
+.article-body td {
+  color: var(--ink-soft);
+}
+
+.article-body tbody tr:last-child td {
+  border-bottom: 0;
+}
+
 .page-prose {
   max-width: 62ch;
   font-size: 16px;
