@@ -11,8 +11,11 @@ type CategoryPageProps = {
   params: { slug: string };
 };
 
+/** Empty desks stay routable but are left off the prerender list. */
 export function generateStaticParams() {
-  return CATEGORIES.map((category) => ({ slug: category.slug }));
+  return CATEGORIES.filter(
+    (category) => getPostsByCategory(category.slug).length > 0,
+  ).map((category) => ({ slug: category.slug }));
 }
 
 export function generateMetadata({ params }: CategoryPageProps): Metadata {
@@ -22,11 +25,14 @@ export function generateMetadata({ params }: CategoryPageProps): Metadata {
   const description =
     category.dek ?? `Recaps, explainers, and hot takes from ${category.name}.`;
   const url = `/category/${category.slug}`;
+  const isEmpty = getPostsByCategory(category.slug).length === 0;
 
   return {
     title: category.name,
     description,
     alternates: { canonical: url },
+    // A desk with no stories is a thin page; keep it out of the index until it has some.
+    robots: isEmpty ? { index: false, follow: true } : undefined,
     openGraph: {
       type: "website",
       url,
