@@ -7,15 +7,19 @@ export function coverImagePath(slug: string): string {
   return `/images/posts/${slug}-cover.jpg`;
 }
 
+/**
+ * Ground colour for a post's generated cover card. Each stays dark enough to
+ * clear 4.5:1 against the white title text the card draws on top.
+ */
 export const CATEGORY_ACCENT: Record<CategorySlug, string> = {
-  "bigg-boss": "#3A5A40",
-  "indias-got-latent": "#3A5A40",
-  "shark-tank-india": "#3A5A40",
-  splitsvilla: "#3A5A40",
-  roadies: "#3A5A40",
-  bollywood: "#3A5A40",
-  "hot-takes": "#D6293A",
-  explainers: "#c98620",
+  "bigg-boss": "#2F4A35",
+  "indias-got-latent": "#8A3A16",
+  "shark-tank-india": "#1F4B4E",
+  splitsvilla: "#6E2247",
+  roadies: "#2B2118",
+  bollywood: "#92600f",
+  "hot-takes": "#a71d2b",
+  explainers: "#3A3F63",
 };
 
 function isRemoteUrl(src: string): boolean {

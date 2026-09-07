@@ -29,8 +29,9 @@ export function generateMetadata({ params }: PostPageProps): Metadata {
   try {
     const post = getPostBySlug(params.slug);
     const url = `/posts/${post.slug}`;
-    const image = resolveCoverSrc(post.coverImage) ?? SITE.ogImage;
 
+    // Images are left off deliberately: the opengraph-image route in this
+    // segment supplies them, and setting them here would override it.
     return {
       title: post.title,
       description: post.excerpt,
@@ -45,13 +46,11 @@ export function generateMetadata({ params }: PostPageProps): Metadata {
         publishedTime: post.date,
         modifiedTime: post.updated ?? post.date,
         authors: [post.author],
-        images: [{ url: image }],
       },
       twitter: {
         card: "summary_large_image",
         title: post.title,
         description: post.excerpt,
-        images: [image],
       },
     };
   } catch {
@@ -80,7 +79,9 @@ export default function PostPage({ params }: PostPageProps) {
     dateModified: post.updated ?? post.date,
     inLanguage: "en-IN",
     mainEntityOfPage: absoluteUrl(`/posts/${post.slug}`),
-    image: [cover ? absoluteUrl(cover) : absoluteUrl(SITE.ogImage)],
+    image: [
+      cover ? absoluteUrl(cover) : absoluteUrl(`/posts/${post.slug}/opengraph-image`),
+    ],
     author: {
       "@type": "Person",
       name: post.author,
@@ -160,6 +161,7 @@ export default function PostPage({ params }: PostPageProps) {
           <CoverImage
             coverImage={post.coverImage}
             category={post.category}
+            title={post.title}
             alt={post.title}
             variant="article"
             priority

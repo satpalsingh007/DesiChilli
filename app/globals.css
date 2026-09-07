@@ -615,15 +615,62 @@ nav.primary .mobile-nav a.active {
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--paper-warm);
+  container-type: inline-size;
 }
 
 .cover img {
   object-fit: cover;
 }
 
-.cover-fallback {
+/*
+ * Generated cover for posts with no photograph of their own. Everything is
+ * sized in container units, so one rule serves the card, hero, and article
+ * variants at whatever width they land on.
+ */
+.cover-art {
   width: 100%;
   height: 100%;
+  padding: 6cqw;
+  display: flex;
+  flex-direction: column;
+  gap: 3cqw;
+  color: #fff;
+  background-color: var(--cover-accent);
+  background-image: repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.05) 0 2px,
+      transparent 2px 9px
+    ),
+    radial-gradient(120% 90% at 12% 0%, rgba(255, 255, 255, 0.16), transparent 60%);
+}
+
+.cover-art-label {
+  font-family: var(--font-mono);
+  font-size: clamp(8px, 2cqw, 15px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.cover-art-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(14px, 5.4cqw, 42px);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.cover-art-brand {
+  margin-top: auto;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(9px, 2.4cqw, 18px);
+  opacity: 0.72;
 }
 
 .cover-card {

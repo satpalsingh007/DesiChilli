@@ -17,6 +17,7 @@ export function RecapCard({ post }: RecapCardProps) {
         <CoverImage
           coverImage={post.coverImage}
           category={post.category}
+          title={post.title}
           alt=""
           variant="card"
         />
