@@ -7,7 +7,7 @@ import { MdxContent } from "@/components/MdxContent";
 import { RecapCard } from "@/components/RecapCard";
 import { authorSlug } from "@/lib/authors";
 import { getCategory } from "@/lib/categories";
-import { resolveCoverSrc } from "@/lib/cover";
+import { absoluteCoverUrl } from "@/lib/cover";
 import {
   formatPostDate,
   getAuthorInitials,
@@ -29,9 +29,13 @@ export function generateMetadata({ params }: PostPageProps): Metadata {
   try {
     const post = getPostBySlug(params.slug);
     const url = `/posts/${post.slug}`;
+    const coverUrl = absoluteCoverUrl(post.coverImage);
+    // Real covers win for social previews. Without one, the opengraph-image
+    // route in this segment supplies the generated typographic card.
+    const images = coverUrl
+      ? [{ url: coverUrl, alt: post.coverAlt ?? post.title }]
+      : undefined;
 
-    // Images are left off deliberately: the opengraph-image route in this
-    // segment supplies them, and setting them here would override it.
     return {
       title: post.title,
       description: post.excerpt,
@@ -46,11 +50,13 @@ export function generateMetadata({ params }: PostPageProps): Metadata {
         publishedTime: post.date,
         modifiedTime: post.updated ?? post.date,
         authors: [post.author],
+        ...(images ? { images } : {}),
       },
       twitter: {
         card: "summary_large_image",
         title: post.title,
         description: post.excerpt,
+        ...(images ? { images: [coverUrl!] } : {}),
       },
     };
   } catch {
@@ -68,7 +74,7 @@ export default function PostPage({ params }: PostPageProps) {
 
   const category = getCategory(post.category);
   const related = getRelatedPostSummaries(post.slug);
-  const cover = resolveCoverSrc(post.coverImage);
+  const coverAbsolute = absoluteCoverUrl(post.coverImage);
 
   const articleLd = {
     "@context": "https://schema.org",
@@ -80,7 +86,7 @@ export default function PostPage({ params }: PostPageProps) {
     inLanguage: "en-IN",
     mainEntityOfPage: absoluteUrl(`/posts/${post.slug}`),
     image: [
-      cover ? absoluteUrl(cover) : absoluteUrl(`/posts/${post.slug}/opengraph-image`),
+      coverAbsolute ?? absoluteUrl(`/posts/${post.slug}/opengraph-image`),
     ],
     author: {
       "@type": "Person",

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import type { CategorySlug } from "./types";
+import { SITE } from "./site";
 
 /** Local cover convention: /images/posts/{slug}-cover.jpg — or any https URL (e.g. Cloudinary). */
 export function coverImagePath(slug: string): string {
@@ -34,4 +35,12 @@ export function resolveCoverSrc(coverImage?: string): string | null {
   const relative = coverImage.replace(/^\//, "");
   const filePath = path.join(process.cwd(), "public", relative);
   return fs.existsSync(filePath) ? coverImage : null;
+}
+
+/** Absolute URL suitable for Open Graph, Twitter, and JSON-LD. */
+export function absoluteCoverUrl(coverImage?: string): string | null {
+  const src = resolveCoverSrc(coverImage);
+  if (!src) return null;
+  if (isRemoteUrl(src)) return src;
+  return new URL(src.startsWith("/") ? src : `/${src}`, SITE.url).toString();
 }

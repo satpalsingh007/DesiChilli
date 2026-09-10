@@ -105,7 +105,18 @@ export default function RootLayout({
       <head>
         <link
           rel="preconnect"
+          href="https://res.cloudinary.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        <link
+          rel="preconnect"
           href="https://pagead2.googlesyndication.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preconnect"
+          href="https://googleads.g.doubleclick.net"
           crossOrigin="anonymous"
         />
         {/*

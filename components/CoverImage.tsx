@@ -28,9 +28,10 @@ export function CoverImage({
   const src = resolveCoverSrc(coverImage);
   const accent = CATEGORY_ACCENT[category];
   const sizeMap = {
-    card: "(max-width: 560px) 100vw, (max-width: 860px) 50vw, 380px",
-    hero: "(max-width: 860px) 100vw, 720px",
-    article: "(max-width: 860px) 100vw, 800px",
+    // Sized to the real layout width so next/image doesn't over-fetch for LCP.
+    card: "(max-width: 560px) 100vw, (max-width: 860px) 50vw, 360px",
+    hero: "(max-width: 860px) 100vw, 640px",
+    article: "(max-width: 860px) 100vw, 720px",
   };
 
   return (
@@ -42,6 +43,7 @@ export function CoverImage({
           fill
           sizes={sizes ?? sizeMap[variant]}
           priority={priority}
+          quality={priority ? 75 : 70}
           style={{ objectFit: "cover" }}
         />
       ) : (
