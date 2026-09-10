@@ -162,7 +162,7 @@ export default function PostPage({ params }: PostPageProps) {
             coverImage={post.coverImage}
             category={post.category}
             title={post.title}
-            alt={post.title}
+            alt={post.coverAlt ?? post.title}
             variant="article"
             priority
           />

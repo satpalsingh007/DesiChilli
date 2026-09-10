@@ -18,7 +18,7 @@ export function HeroLead({ post, priority = false }: HeroLeadProps) {
           coverImage={post.coverImage}
           category={post.category}
           title={post.title}
-          alt=""
+          alt={post.coverImage ? (post.coverAlt ?? post.title) : ""}
           variant="hero"
           priority={priority}
         />

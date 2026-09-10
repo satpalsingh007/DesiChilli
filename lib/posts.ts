@@ -38,6 +38,7 @@ function toSummary(data: PostFrontmatter): PostSummary {
     readTime: data.readTime,
     slug: data.slug,
     coverImage: data.coverImage,
+    coverAlt: data.coverAlt,
     faq: data.faq,
   };
 }
@@ -63,6 +64,7 @@ function readPostFile(slug: string): Post {
     readTime: frontmatter.readTime,
     slug: frontmatter.slug ?? slug,
     coverImage: frontmatter.coverImage,
+    coverAlt: frontmatter.coverAlt,
     faq: readFaq(frontmatter.faq),
     content,
   };

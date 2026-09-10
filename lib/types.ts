@@ -31,6 +31,8 @@ export type PostFrontmatter = {
   slug: string;
   /** Local `/images/posts/{slug}-cover.jpg` or a Cloudinary https URL */
   coverImage?: string;
+  /** Descriptive alt for the cover photo; falls back to the title when omitted. */
+  coverAlt?: string;
   /** Best on explainers and previews, where readers arrive with a direct question. */
   faq?: FaqEntry[];
 };
