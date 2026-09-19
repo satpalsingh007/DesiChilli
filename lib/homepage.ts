@@ -47,17 +47,9 @@ function byHeatThenDate(a: PostSummary, b: PostSummary): number {
 }
 
 function pickHeroes(posts: PostSummary[]): PostSummary[] {
-  const today = todayInKolkata();
-  const fromToday = posts
-    .filter((post) => calendarDate(post.date) === today)
-    .slice(0, HERO_COUNT);
-
-  const chosen = new Set(fromToday.map((post) => post.slug));
-  const fillers = posts
-    .filter((post) => !chosen.has(post.slug))
-    .sort(byHeatThenDate);
-
-  return [...fromToday, ...fillers].slice(0, Math.min(HERO_COUNT, posts.length));
+  return [...posts]
+    .sort(byDateThenHeat)
+    .slice(0, Math.min(HERO_COUNT, posts.length));
 }
 
 function pickLatestRecaps(posts: PostSummary[], exclude: Set<string>): PostSummary[] {
