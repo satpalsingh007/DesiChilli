@@ -23,6 +23,10 @@
 # local X/Twitter drafts (regenerated on request, not for the repo)
 /x/
 
+# local Quora/Reddit posting drafts
+/quora.md
+/reddit.md
+
 # debug
 npm-debug.log*
 yarn-debug.log*
